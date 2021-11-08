@@ -13,5 +13,6 @@ module.exports = {
     'no-use-before-define': ['error', { functions: false }],
     'no-underscore-dangle': ['warn', { allowAfterThis: true }],
     'import/prefer-default-export': 'off',
+    'import/extensions': ['error', "ignorePackages"]
   },
 };
