@@ -1,36 +1,49 @@
+import {
+  CliErrorNoArg,
+  CliErrorOptionDuplicate,
+  CliErrorUnknownArg,
+  CliErrorOptionWithoutArg,
+} from '../errors/cli-errors/index.js';
+import { CLI_OPTIONS_MAP } from '../configs/cli-options.js';
+
 /**
- * @typedef { string | Symbol } ArgvMapKey
- * @typedef { string | string[] } ArgvMapValue
- * @typedef { Map<ArgvMapKey, ArgvMapValue> } ArgvMap
+ * @throws {CliErrorNoArg}
+ * @throws {CliErrorUnknownArg}
+ * @throws {CliErrorOptionDuplicate}
+ * @throws {CliErrorOptionWithoutArg}
+ * @type {(argv: string[]) => Map<Symbol, string>}
  */
-
-export const CLI_FREE_ARGS = Symbol('CLI free arguments');
-
-/** @type {(token: string) => boolean} */
-export const isOption = (token) => /^--?[^-]+/.test(token);
-
-/** @type {(argv: string[]) => ArgvMap} */
 export const parseArgvToMap = (argv) => {
-  if (argv.length === 0) return new Map();
+  if (argv.length === 0) throw new CliErrorNoArg();
 
   /** @type {string | undefined} */
-  let option;
+  let prevOptionToken;
 
-  return argv.reduce((argvMap, token) => {
-    if (option === undefined) {
-      if (isOption(token)) {
-        option = token;
-      } else {
-        if (!argvMap.has(CLI_FREE_ARGS)) {
-          argvMap.set(CLI_FREE_ARGS, []);
-        }
-        argvMap.get(CLI_FREE_ARGS).push(token);
+  /** @type {Map<Symbol, string>} */
+  const argvMap = new Map();
+
+  for (let position = 0; position < argv.length; position += 1) {
+    const token = argv[position];
+    if (prevOptionToken) {
+      if (CLI_OPTIONS_MAP.has(token)) {
+        throw new CliErrorOptionWithoutArg(position, prevOptionToken);
       }
+      argvMap.set(CLI_OPTIONS_MAP.get(prevOptionToken), token);
+      prevOptionToken = undefined;
     } else {
-      const isNextOption = isOption(token);
-      argvMap.set(option, isNextOption ? undefined : token);
-      option = isNextOption ? token : undefined;
+      if (!CLI_OPTIONS_MAP.has(token)) {
+        throw new CliErrorUnknownArg(position, token);
+      }
+      if (argvMap.has(CLI_OPTIONS_MAP.get(token))) {
+        throw new CliErrorOptionDuplicate(position, token);
+      }
+      prevOptionToken = token;
     }
-    return argvMap;
-  }, /** @type {ArgvMap} */ new Map());
+  }
+
+  if (prevOptionToken) {
+    throw new CliErrorOptionWithoutArg(argv.length - 1, prevOptionToken);
+  }
+
+  return argvMap;
 };
