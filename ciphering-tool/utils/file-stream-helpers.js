@@ -1,5 +1,4 @@
 import { close, constants, open, read, write } from 'fs';
-import { STDIN_FILE_HANDLE, STDOUT_FILE_HANDLE } from '../configs/constants.js';
 
 /**
  *
@@ -9,9 +8,9 @@ import { STDIN_FILE_HANDLE, STDOUT_FILE_HANDLE } from '../configs/constants.js';
  *
  * @typedef {
  *    {
- *      stream: Stream,
- *      filename: string | undefined,
- *      isInput: boolean | undefined,
+ *      stream: Stream | Readable | Writable,
+ *      filename: string,
+ *      isInput?: boolean | undefined,
  *    }
  * } FileStreamHelperOptions
  *
@@ -24,7 +23,7 @@ export class FileStreamHelper {
   constructor({ stream, filename, isInput = true }) {
     this.stream = stream;
     this.filename = filename;
-    this.fileHandle = isInput ? STDIN_FILE_HANDLE : STDOUT_FILE_HANDLE;
+    this.fileHandle = 0;
     this.flags = isInput
       ? constants.O_RDONLY
       : constants.O_CREAT | constants.O_APPEND;
@@ -34,17 +33,13 @@ export class FileStreamHelper {
    * @param { Callback } callback
    */
   open(callback) {
-    if (this.filename) {
-      open(this.filename, this.flags, (error, fileHandle) => {
-        if (!error) {
-          // eslint-disable-next-line no-param-reassign
-          this.fileHandle = fileHandle;
-        }
-        callback(error);
-      });
-    } else {
-      callback();
-    }
+    open(this.filename, this.flags, (error, fileHandle) => {
+      if (!error) {
+        // eslint-disable-next-line no-param-reassign
+        this.fileHandle = fileHandle;
+      }
+      callback(error);
+    });
   }
 
   /**
@@ -52,13 +47,7 @@ export class FileStreamHelper {
    * @param { Callback } callback
    */
   close(error, callback) {
-    if (this.fileHandle) {
-      close(this.fileHandle, (closingError) => callback(closingError || error));
-    } else {
-      callback(error);
-    }
-    this.stream = null;
-    this.fileHandle = undefined;
+    close(this.fileHandle, (closingError) => callback(closingError || error));
   }
 
   /**

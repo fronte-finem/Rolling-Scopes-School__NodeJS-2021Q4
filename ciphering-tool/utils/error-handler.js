@@ -1,24 +1,29 @@
+import { EOL } from 'os';
 import { BaseError } from '../errors/base-error.js';
 
+/**
+ * @param { Promise<void> } run
+ */
 export const errorHandler = (run) => {
-  try {
-    run();
-  } catch (error) {
-    let message;
-    let exitCode = 42;
-    if (error instanceof BaseError) {
-      message = error.message;
-      exitCode = 1;
-    } else if (error instanceof Error) {
-      message = error.message;
-      exitCode = 2;
-    } else if (typeof error === 'string') {
-      message = error;
-      exitCode = 3;
-    } else {
-      message = `Unknown error: ${String(error)}`;
-    }
-    process.stderr.write(message);
-    process.exit(exitCode);
-  }
+  let message;
+  run()
+    .catch((error) => {
+      if (error instanceof BaseError) {
+        message = error.message;
+        process.exitCode = 1;
+      } else if (error instanceof Error) {
+        message = error.message;
+        process.exitCode = 2;
+      } else if (typeof error === 'string') {
+        message = error;
+        process.exitCode = 3;
+      } else {
+        message = `Unknown error: ${String(error)}`;
+        process.exitCode = 42;
+      }
+    })
+    .finally(() => {
+      if (message) process.stderr.write(`${message}${EOL}`);
+      process.exit();
+    });
 };

@@ -3,10 +3,11 @@ import { FileStreamHelper } from '../utils/file-stream-helpers.js';
 
 export class InputStream extends Readable {
   /**
-   * @param {string | undefined} filename
+   * @param { string } filename
+   * @param { AbortSignal | undefined } [signal]
    */
-  constructor(filename) {
-    super();
+  constructor(filename, signal) {
+    super({ signal });
     this.helper = new FileStreamHelper({
       stream: this,
       filename,
@@ -26,3 +27,9 @@ export class InputStream extends Readable {
     this.helper.read(size);
   }
 }
+
+/**
+ * @param { string | undefined } filename
+ */
+export const getInputStream = (filename) =>
+  filename ? new InputStream(filename) : process.stdin;

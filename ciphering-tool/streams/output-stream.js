@@ -3,10 +3,11 @@ import { FileStreamHelper } from '../utils/file-stream-helpers.js';
 
 export class OutputStream extends Writable {
   /**
-   * @param {string | undefined} filename
+   * @param {string} filename
+   * @param { AbortSignal | undefined } [signal]
    */
-  constructor(filename) {
-    super();
+  constructor(filename, signal) {
+    super({ signal });
     this.helper = new FileStreamHelper({
       stream: this,
       filename,
@@ -26,3 +27,9 @@ export class OutputStream extends Writable {
     this.helper.write(chunk, callback);
   }
 }
+
+/**
+ * @param { string | undefined } filename
+ */
+export const getOutputStream = (filename) =>
+  filename ? new OutputStream(filename) : process.stdout;
