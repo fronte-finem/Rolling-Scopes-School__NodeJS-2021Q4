@@ -1,4 +1,10 @@
-import { close, constants, open, read, write } from 'fs';
+import { close, constants, open, read, write, statSync, existsSync } from 'fs';
+import {
+  FileError,
+  FileErrorNotExists,
+  FileErrorNotFile,
+} from '../errors/file-error.js';
+import { StreamError } from '../errors/stream-error.js';
 
 /**
  *
@@ -21,6 +27,12 @@ export class FileStreamHelper {
    * @param { FileStreamHelperOptions } options
    */
   constructor({ stream, filename, isInput = true }) {
+    if (!existsSync(filename)) {
+      throw new FileErrorNotExists(filename);
+    }
+    if (!statSync(filename).isFile()) {
+      throw new FileErrorNotFile(filename);
+    }
     this.stream = stream;
     this.filename = filename;
     this.fileHandle = 0;
@@ -36,7 +48,7 @@ export class FileStreamHelper {
         // eslint-disable-next-line no-param-reassign
         this.fileHandle = fileHandle;
       }
-      callback(error);
+      callback(error && new FileError(this.filename, error));
     });
   }
 
@@ -45,7 +57,13 @@ export class FileStreamHelper {
    * @param { Callback } callback
    */
   close(error, callback) {
-    close(this.fileHandle, (closingError) => callback(closingError || error));
+    close(this.fileHandle, (closingError) =>
+      callback(
+        closingError
+          ? new FileError(this.filename, closingError)
+          : error && new StreamError(error)
+      )
+    );
   }
 
   /**
@@ -55,7 +73,7 @@ export class FileStreamHelper {
     const buffer = Buffer.alloc(size);
     read(this.fileHandle, buffer, 0, size, null, (error, bytesRead) => {
       if (error) {
-        this.stream.destroy(error);
+        this.stream.destroy(new FileError(this.filename, error));
       } else {
         this.stream.push(bytesRead > 0 ? buffer.slice(0, bytesRead) : null);
       }
