@@ -35,7 +35,10 @@ const getCharTransformer = (indexTransformer) => (char) => {
  * @return { (char: string) => string }
  */
 const getCharShifter = (shift) =>
-  getCharTransformer((index) => (index + shift) % LATIN_MOD);
+  getCharTransformer((input) => {
+    const output = (input + shift) % LATIN_MOD;
+    return output >= 0 ? output : LATIN_MOD + output;
+  });
 
 /**
  * @param { string } char
