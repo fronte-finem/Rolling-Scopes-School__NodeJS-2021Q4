@@ -4,7 +4,6 @@ import { errorHandler } from './utils/error-handler.js';
 import { OptionInput, OptionOutput } from './configs/cli-options.js';
 import { getInputStream } from './streams/input-stream.js';
 import { getOutputStream } from './streams/output-stream.js';
-import { FileError } from './errors/file-error/file-error.js';
 
 console.log('ciphering tool');
 console.log(process.argv.slice(2));
@@ -15,12 +14,8 @@ errorHandler(async () => {
   process.stdout.write(`${map}\n`);
   console.log(map);
 
-  try {
-    await pipeline(
-      getInputStream(map.get(OptionInput)),
-      getOutputStream(map.get(OptionOutput))
-    );
-  } catch (error) {
-    throw new FileError(error.message);
-  }
+  await pipeline(
+    getInputStream(map.get(OptionInput)),
+    getOutputStream(map.get(OptionOutput))
+  );
 });
