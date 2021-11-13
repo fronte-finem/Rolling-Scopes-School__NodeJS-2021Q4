@@ -3,7 +3,7 @@ import {
   CliErrorOptionDuplicate,
   CliErrorUnknownArg,
   CliErrorOptionWithoutArg,
-} from '../errors/cli-errors/index.js';
+} from '../errors/cli-error.js';
 import { CLI_OPTIONS_MAP } from '../configs/cli-options.js';
 
 /**
