@@ -24,9 +24,7 @@ export class FileStreamHelper {
     this.stream = stream;
     this.filename = filename;
     this.fileHandle = 0;
-    this.flags = isInput
-      ? constants.O_RDONLY
-      : constants.O_CREAT | constants.O_APPEND;
+    this.flags = isInput ? constants.O_RDONLY : constants.O_APPEND;
   }
 
   /**
