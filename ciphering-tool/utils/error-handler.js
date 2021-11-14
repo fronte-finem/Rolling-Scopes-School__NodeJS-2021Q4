@@ -24,6 +24,6 @@ export const errorHandler = (run) => {
     })
     .finally(() => {
       if (message) process.stderr.write(`${message}${EOL}`);
-      process.exit();
+      process.exit(process.exitCode);
     });
 };
