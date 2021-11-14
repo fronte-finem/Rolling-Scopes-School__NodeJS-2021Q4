@@ -27,9 +27,3 @@ export class InputStream extends Readable {
     this.helper.read(size);
   }
 }
-
-/**
- * @param { string | undefined } filename
- */
-export const getInputStream = (filename) =>
-  filename ? new InputStream(filename) : process.stdin;

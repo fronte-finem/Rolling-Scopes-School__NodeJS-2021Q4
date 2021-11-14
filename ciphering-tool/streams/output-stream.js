@@ -27,9 +27,3 @@ export class OutputStream extends Writable {
     this.helper.write(chunk, callback);
   }
 }
-
-/**
- * @param { string | undefined } filename
- */
-export const getOutputStream = (filename) =>
-  filename ? new OutputStream(filename) : process.stdout;
