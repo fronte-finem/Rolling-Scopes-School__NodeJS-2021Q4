@@ -16,6 +16,6 @@ errorHandler(async () => {
   await pipeline(
     inputFile ? new InputStream(inputFile) : process.stdin,
     ...cipherStreams.map((SomeCipherStream) => new SomeCipherStream()),
-    outputFile ? new OutputStream(inputFile) : process.stdout
+    outputFile ? new OutputStream(outputFile) : process.stdout
   );
 });
