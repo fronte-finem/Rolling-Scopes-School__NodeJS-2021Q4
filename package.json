@@ -7,8 +7,9 @@
     "doc": "docs"
   },
   "scripts": {
-    "task-1": "node ciphering-tool",
-    "lint": "eslint --fix ./"
+    "lint": "eslint --fix ./",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test:coverage": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage"
   },
   "author": "fronte-finem",
   "repository": {
@@ -26,5 +27,8 @@
     "eslint-plugin-import": "^2.25.2",
     "jest": "^27.3.1",
     "prettier": "^2.4.1"
+  },
+  "jest": {
+    "transform": {}
   }
 }
