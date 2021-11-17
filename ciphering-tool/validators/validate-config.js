@@ -5,9 +5,10 @@ import {
 import { CIPHERS_MAP } from '../configs/ciphers-map.js';
 
 /**
- * @throws { ConfigErrorNoConfig}
- * @throws { ConfigErrorInvalidToken}
- * @type {(config: string | undefined) => CipherStream[]}
+ * @throws { ConfigErrorNoConfig }
+ * @throws { ConfigErrorInvalidToken }
+ * @param { string | undefined } [config]
+ * @return { CipherStream[] }
  */
 export const validateConfig = (config) => {
   if (!config) {
