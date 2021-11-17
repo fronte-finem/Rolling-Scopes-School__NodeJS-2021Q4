@@ -1,15 +1,15 @@
-import { validateConfig } from '../../ciphering-tool/validators/validate-config.js';
+import { validateConfig } from '../../../ciphering-tool/validators/validate-config.js';
 import {
   ConfigErrorInvalidToken,
   ConfigErrorNoConfig,
-} from '../../ciphering-tool/errors/config-error.js';
+} from '../../../ciphering-tool/errors/config-error.js';
 import {
   AtbashStream,
   CaesarDecodeStream,
   CaesarEncodeStream,
   Rot8DecodeStream,
   Rot8EncodeStream,
-} from '../../ciphering-tool/streams/cipher-stream.js';
+} from '../../../ciphering-tool/streams/cipher-stream.js';
 
 describe('Test config validation', () => {
   it('should throw error if config not passed', () => {
