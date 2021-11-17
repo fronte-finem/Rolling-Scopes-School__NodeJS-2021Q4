@@ -26,7 +26,7 @@ export const parseArgvToMap = (argv) => {
     const token = argv[position];
     if (prevOptionToken) {
       if (CLI_OPTIONS_MAP.has(token)) {
-        throw new CliErrorOptionWithoutArg(position, prevOptionToken);
+        throw new CliErrorOptionWithoutArg(position - 1, prevOptionToken);
       }
       argvMap.set(CLI_OPTIONS_MAP.get(prevOptionToken), token);
       prevOptionToken = undefined;
