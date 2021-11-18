@@ -1,12 +1,12 @@
 const getOptionDescription = (name) => `CLI option: ${name}`;
 
 /**
- * @type {  Readonly<{ Config: symbol, Input: symbol, Output: symbol}> }
+ * @type {  Readonly<{ CONFIG: Symbol, INPUT: Symbol, OUTPUT: Symbol}> }
  */
 export const CLI_OPTION = Object.freeze({
-  Config: Symbol(getOptionDescription('config')),
-  Input: Symbol(getOptionDescription('input')),
-  Output: Symbol(getOptionDescription('output')),
+  CONFIG: Symbol(getOptionDescription('config')),
+  INPUT: Symbol(getOptionDescription('input')),
+  OUTPUT: Symbol(getOptionDescription('output')),
 });
 
 /**
@@ -14,11 +14,11 @@ export const CLI_OPTION = Object.freeze({
  */
 export const CLI_OPTIONS_MAP = Object.freeze(
   new Map([
-    ['-c', CLI_OPTION.Config],
-    ['--config', CLI_OPTION.Config],
-    ['-i', CLI_OPTION.Input],
-    ['--input', CLI_OPTION.Input],
-    ['-o', CLI_OPTION.Output],
-    ['--output', CLI_OPTION.Output],
+    ['-c', CLI_OPTION.CONFIG],
+    ['--config', CLI_OPTION.CONFIG],
+    ['-i', CLI_OPTION.INPUT],
+    ['--input', CLI_OPTION.INPUT],
+    ['-o', CLI_OPTION.OUTPUT],
+    ['--output', CLI_OPTION.OUTPUT],
   ])
 );

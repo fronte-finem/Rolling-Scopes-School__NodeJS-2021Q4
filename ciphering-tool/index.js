@@ -8,10 +8,10 @@ import { validateConfig } from './validators/validate-config.js';
 
 errorHandler(async () => {
   const argvMap = parseArgvToMap(process.argv.slice(2));
-  const cipherStreams = validateConfig(argvMap.get(CLI_OPTION.Config));
+  const cipherStreams = validateConfig(argvMap.get(CLI_OPTION.CONFIG));
 
-  const inputFile = argvMap.get(CLI_OPTION.Input);
-  const outputFile = argvMap.get(CLI_OPTION.Output);
+  const inputFile = argvMap.get(CLI_OPTION.INPUT);
+  const outputFile = argvMap.get(CLI_OPTION.OUTPUT);
 
   await pipeline(
     inputFile ? new InputStream(inputFile) : process.stdin,
