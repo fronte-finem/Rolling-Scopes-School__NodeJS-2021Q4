@@ -30,6 +30,7 @@
   },
   "jest": {
     "transform": {},
-    "verbose": true
+    "verbose": true,
+    "collectCoverageFrom" : ["ciphering-tool/**/*.js"]
   }
 }
