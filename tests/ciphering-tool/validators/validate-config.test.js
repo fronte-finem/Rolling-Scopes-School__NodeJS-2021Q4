@@ -11,13 +11,13 @@ import {
   Rot8EncodeStream,
 } from '../../../ciphering-tool/streams/cipher-stream.js';
 
-describe('Test config validation', () => {
-  it('should throw error if config not passed', () => {
+describe('Test config validation:', () => {
+  it('should throw ConfigErrorNoConfig if config not passed', () => {
     expect(validateConfig).toThrowError(ConfigErrorNoConfig);
     expect(() => validateConfig('')).toThrowError(ConfigErrorNoConfig);
   });
 
-  it('should throw error if get invalid token', () => {
+  it('should throw ConfigErrorInvalidToken if get invalid token', () => {
     expect(validateConfig).toThrowError(ConfigErrorNoConfig);
     expect(() => validateConfig('A0')).toThrowError(ConfigErrorInvalidToken);
     expect(() => validateConfig('A1')).toThrowError(ConfigErrorInvalidToken);
