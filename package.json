@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/fronte-finem/Rolling-Scopes-School__NodeJS-2021Q4#readme",
   "devDependencies": {
+    "@jest/globals": "^27.3.1",
     "eslint": "^8.2.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.3.0",
@@ -31,6 +32,8 @@
   "jest": {
     "transform": {},
     "verbose": true,
-    "collectCoverageFrom" : ["ciphering-tool/**/*.js"]
+    "collectCoverageFrom": [
+      "ciphering-tool/**/*.js"
+    ]
   }
 }
