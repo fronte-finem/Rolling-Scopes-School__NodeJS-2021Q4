@@ -4,10 +4,10 @@ import { FileStreamHelper } from '../utils/file-stream-helpers.js';
 export class InputStream extends Readable {
   /**
    * @param { string } filename
-   * @param { AbortSignal | undefined } [signal]
    */
-  constructor(filename, signal) {
-    super({ signal });
+  constructor(filename) {
+    super();
+    /** @type { FileStreamHelper | undefined } */
     this.helper = new FileStreamHelper({
       stream: this,
       filename,
@@ -16,14 +16,14 @@ export class InputStream extends Readable {
   }
 
   _construct(callback) {
-    this.helper.open(callback);
+    this.helper?.open(callback);
   }
 
   _destroy(error, callback) {
-    this.helper.close(error, callback);
+    this.helper?.close(error, callback);
   }
 
   _read(size) {
-    this.helper.read(size);
+    this.helper?.read(size);
   }
 }
