@@ -1,15 +1,12 @@
 import { EOL } from 'os';
 import { spawn } from 'child_process';
 import { readFile, rm, writeFile } from 'fs/promises';
-import {
-  getRandomInt,
-  getRandomItem,
-} from '../../ciphering-tool/utils/random.js';
+import { getRandomInt, getRandomItem } from '../ciphering-tool/utils/random.js';
 import {
   CONFIG_TOKENS,
   ERROR_SCENARIOS,
   USAGE_EXAMPLES_SCENARIOS,
-} from './config.js';
+} from './ciphering-tool.config.js';
 
 describe('Error scenarios:', () => {
   const getScenario = (options, error) => async () => {
