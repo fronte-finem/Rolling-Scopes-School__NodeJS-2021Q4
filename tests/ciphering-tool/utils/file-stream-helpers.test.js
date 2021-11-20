@@ -10,31 +10,22 @@ import { StreamError } from '../../../ciphering-tool/errors/stream-error.js';
 jest.mock('fs', () => {
   const { constants } = jest.requireActual('fs');
 
-  const getChunkArgs = (str) => [str.length, Buffer.from(str)];
-
   const TEST_FILE_DESCRIPTOR = 42;
-  const TEST_READ_CHUNK = 'Read';
-  const TEST_WRITE_CHUNK = 'Write';
 
-  const mockedOpen = (filename, flags, callback) =>
-    callback(null, TEST_FILE_DESCRIPTOR);
-  const mockedClose = (fd, callback) => callback();
-  const mockedRead = (fd, buffer, offset, length, position, callback) =>
-    callback(null, ...getChunkArgs('Read'));
-  const mockedWrite = (fd, buffer, callback) =>
-    callback(null, ...getChunkArgs('Write'));
+  const mockOpen = (...[, , callback]) => callback(null, TEST_FILE_DESCRIPTOR);
+  const mockClose = (_, callback) => callback();
+  const mockRead = (...[, , , , , callback]) => callback(null, 5);
+  const mockWrite = (...[, , callback]) => callback(null, 5);
 
   return {
     TEST_FILE_DESCRIPTOR,
-    TEST_READ_CHUNK,
-    TEST_WRITE_CHUNK,
     constants,
     existsSync: jest.fn().mockReturnValue(true),
     statSync: jest.fn().mockReturnValue({ isFile: () => true }),
-    open: jest.fn().mockImplementation(mockedOpen),
-    close: jest.fn().mockImplementation(mockedClose),
-    read: jest.fn().mockImplementation(mockedRead),
-    write: jest.fn().mockImplementation(mockedWrite),
+    open: jest.fn().mockImplementation(mockOpen),
+    close: jest.fn().mockImplementation(mockClose),
+    read: jest.fn().mockImplementation(mockRead),
+    write: jest.fn().mockImplementation(mockWrite),
   };
 });
 
