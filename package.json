@@ -1,27 +1,17 @@
 {
   "name": "rolling-scopes-school__nodejs-2021q4",
   "description": "# Ciphering CLI tool",
+  "author": "fronte-finem",
   "private": true,
   "type": "module",
-  "directories": {
-    "doc": "docs"
-  },
   "scripts": {
     "lint": "eslint --fix ./",
-    "test": "node --experimental-vm-modules --no-warnings node_modules/jest/bin/jest.js",
-    "test:coverage": "node --experimental-vm-modules --no-warnings node_modules/jest/bin/jest.js --coverage"
+    "test": "jest",
+    "test:coverage": "jest --coverage"
   },
-  "author": "fronte-finem",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/fronte-finem/Rolling-Scopes-School__NodeJS-2021Q4.git"
-  },
-  "bugs": {
-    "url": "https://github.com/fronte-finem/Rolling-Scopes-School__NodeJS-2021Q4/issues"
-  },
-  "homepage": "https://github.com/fronte-finem/Rolling-Scopes-School__NodeJS-2021Q4#readme",
   "devDependencies": {
-    "@jest/globals": "^27.3.1",
+    "@babel/plugin-transform-modules-commonjs": "^7.16.0",
+    "@types/jest": "^27.0.3",
     "eslint": "^8.2.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.3.0",
@@ -30,10 +20,18 @@
     "prettier": "^2.4.1"
   },
   "jest": {
-    "transform": {},
     "verbose": true,
     "collectCoverageFrom": [
       "ciphering-tool/**/*.js"
     ]
+  },
+  "babel": {
+    "env": {
+      "test": {
+        "plugins": [
+          "@babel/plugin-transform-modules-commonjs"
+        ]
+      }
+    }
   }
 }
