@@ -6,7 +6,7 @@ import {
   Rot8EncodeStream,
 } from '../streams/cipher-stream.js';
 
-/** @type {Readonly<Map<string, CipherStream>>} */
+/** @type {Readonly<Map<string, new () => CipherStream>>} */
 export const CIPHERS_MAP = Object.freeze(
   new Map([
     ['A', AtbashStream],
