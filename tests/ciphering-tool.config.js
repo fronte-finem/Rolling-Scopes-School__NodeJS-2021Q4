@@ -1,3 +1,5 @@
+import { webcrypto } from 'crypto';
+
 /**
  * @type { string[] }
  */
@@ -26,6 +28,8 @@ const getErrorScenario = (options, error) =>
  */
 const getSuccessScenario = (config, output) =>
   Object.freeze({ config, output });
+
+const randomName = webcrypto.randomUUID();
 
 /**
  * @type { Readonly<ErrorScenario>[] }
@@ -69,12 +73,12 @@ export const ERROR_SCENARIOS = Object.freeze([
     'File Error: is not a file - "../"'
   ),
   getErrorScenario(
-    ['--config', 'A', '--input', '(ヘ･_･)ヘ┳━┳.txt'],
-    'File Error: file not exists - "(ヘ･_･)ヘ┳━┳.txt"'
+    ['--config', 'A', '--input', `${randomName}.txt`],
+    `File Error: file not exists - "${randomName}.txt"`
   ),
   getErrorScenario(
-    ['--config', 'A', '--output', './--<-<-<@/'],
-    'File Error: file not exists - "./--<-<-<@/"'
+    ['--config', 'A', '--output', `./${randomName}/`],
+    `File Error: file not exists - "./${randomName}/"`
   ),
 ]);
 
