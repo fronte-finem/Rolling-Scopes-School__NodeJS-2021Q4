@@ -22,7 +22,8 @@
   "jest": {
     "verbose": true,
     "collectCoverageFrom": [
-      "ciphering-tool/**/*.js"
+      "ciphering-tool/**/*.js",
+      "!ciphering-tool/index.js"
     ]
   },
   "babel": {
