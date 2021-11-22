@@ -1,0 +1,29 @@
+{
+  "name": "rolling-scopes-school__nodejs-2021q4",
+  "description": "# Ciphering CLI tool",
+  "private": true,
+  "type": "module",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "task-1": "node ciphering-tool",
+    "lint": "eslint --fix ./"
+  },
+  "author": "fronte-finem",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fronte-finem/Rolling-Scopes-School__NodeJS-2021Q4.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fronte-finem/Rolling-Scopes-School__NodeJS-2021Q4/issues"
+  },
+  "homepage": "https://github.com/fronte-finem/Rolling-Scopes-School__NodeJS-2021Q4#readme",
+  "devDependencies": {
+    "eslint": "^8.2.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.25.2",
+    "prettier": "^2.4.1"
+  }
+}
